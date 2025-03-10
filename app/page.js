@@ -11,6 +11,7 @@ import { getFeaturedCars } from "@/actions/home";
 import { CarCard } from "@/components/car-card";
 import { HomeSearch } from "@/components/home-search";
 import Link from "next/link";
+import Image from "next/image";
 import { bodyTypes, carMakes, faqItems } from "@/lib/data";
 
 export default async function Home() {
@@ -41,7 +42,7 @@ export default async function Home() {
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold">Featured Cars</h2>
             <Button variant="ghost" className="flex items-center" asChild>
-              <Link href="/cars?featured=true">
+              <Link href="/cars">
                 View All <ChevronRight className="ml-1 h-4 w-4" />
               </Link>
             </Button>
@@ -72,11 +73,16 @@ export default async function Home() {
                 href={`/cars?make=${make.name}`}
                 className="bg-white rounded-lg shadow p-4 text-center hover:shadow-md transition cursor-pointer"
               >
-                <img
-                  src={make.imageUrl || `/make/${make.name.toLowerCase()}.webp`}
-                  alt={make.name}
-                  className="h-16 w-auto mx-auto mb-2"
-                />
+                <div className="h-16 w-auto mx-auto mb-2 relative">
+                  <Image
+                    src={
+                      make.imageUrl || `/make/${make.name.toLowerCase()}.webp`
+                    }
+                    alt={make.name}
+                    fill
+                    style={{ objectFit: "contain" }}
+                  />
+                </div>
                 <h3 className="font-medium">{make.name}</h3>
               </Link>
             ))}
@@ -142,13 +148,14 @@ export default async function Home() {
                 href={`/cars?bodyType=${type.name}`}
                 className="relative group cursor-pointer"
               >
-                <div className="overflow-hidden rounded-lg flex justify-end">
-                  <img
+                <div className="overflow-hidden rounded-lg flex justify-end h-28 mb-4 relative">
+                  <Image
                     src={
                       type.imageUrl || `/body/${type.name.toLowerCase()}.webp`
                     }
                     alt={type.name}
-                    className="h-28 mb-4 object-cover group-hover:scale-105 transition duration-300"
+                    fill
+                    className="object-cover group-hover:scale-105 transition duration-300"
                   />
                 </div>
                 <div className="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent rounded-lg flex items-end">

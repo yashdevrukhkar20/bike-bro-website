@@ -31,6 +31,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Label } from "@/components/ui/label";
 import { addCar, processCarImageWithAI } from "@/actions/cars";
 import useFetch from "@/hooks/use-fetch";
+import Image from "next/image";
 
 // Predefined options
 const fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid", "Plug-in Hybrid"];
@@ -607,10 +608,13 @@ export const AddCarForm = () => {
                       <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4">
                         {uploadedImages.map((image, index) => (
                           <div key={index} className="relative group">
-                            <img
+                            <Image
                               src={image}
                               alt={`Car image ${index + 1}`}
-                              className="h-24 w-full object-cover rounded-md"
+                              height={50}
+                              width={50}
+                              className="h-28 w-full object-cover rounded-md"
+                              priority
                             />
                             <Button
                               type="button"

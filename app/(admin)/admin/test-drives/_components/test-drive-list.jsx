@@ -183,26 +183,6 @@ export const TestDrivesList = () => {
             <div className="space-y-4">
               {testDrivesData?.data?.map((booking) => (
                 <div key={booking.id} className="relative">
-                  <div className="absolute top-4 right-4 z-10 flex gap-2">
-                    <Select
-                      value={booking.status}
-                      onValueChange={(value) =>
-                        handleUpdateStatus(booking.id, value)
-                      }
-                      disabled={updatingStatus}
-                    >
-                      <SelectTrigger className="w-full h-8">
-                        <SelectValue placeholder="Update Status" />
-                      </SelectTrigger>
-                      <SelectContent>
-                        <SelectItem value="PENDING">Pending</SelectItem>
-                        <SelectItem value="CONFIRMED">Confirmed</SelectItem>
-                        <SelectItem value="COMPLETED">Completed</SelectItem>
-                        <SelectItem value="CANCELLED">Cancelled</SelectItem>
-                        <SelectItem value="NO_SHOW">No Show</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
                   <TestDriveCard
                     booking={booking}
                     onCancel={handleCancel}
@@ -212,6 +192,26 @@ export const TestDrivesList = () => {
                     isAdmin={true}
                     isCancelling={cancelling}
                     cancelError={cancelError}
+                    renderStatusSelector={() => (
+                      <Select
+                        value={booking.status}
+                        onValueChange={(value) =>
+                          handleUpdateStatus(booking.id, value)
+                        }
+                        disabled={updatingStatus}
+                      >
+                        <SelectTrigger className="w-full h-8">
+                          <SelectValue placeholder="Update Status" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          <SelectItem value="PENDING">Pending</SelectItem>
+                          <SelectItem value="CONFIRMED">Confirmed</SelectItem>
+                          <SelectItem value="COMPLETED">Completed</SelectItem>
+                          <SelectItem value="CANCELLED">Cancelled</SelectItem>
+                          <SelectItem value="NO_SHOW">No Show</SelectItem>
+                        </SelectContent>
+                      </Select>
+                    )}
                   />
                 </div>
               ))}

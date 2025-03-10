@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { Heart, Car as CarIcon, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
@@ -61,11 +62,14 @@ export const CarCard = ({ car }) => {
     <Card className="overflow-hidden hover:shadow-lg transition group">
       <div className="relative h-48">
         {car.images && car.images.length > 0 ? (
-          <img
-            src={car.images[0]}
-            alt={`${car.make} ${car.model}`}
-            className="w-full h-full object-cover group-hover:scale-105 transition duration-300"
-          />
+          <div className="relative w-full h-full">
+            <Image
+              src={car.images[0]}
+              alt={`${car.make} ${car.model}`}
+              fill
+              className="object-cover group-hover:scale-105 transition duration-300"
+            />
+          </div>
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
             <CarIcon className="h-12 w-12 text-gray-400" />

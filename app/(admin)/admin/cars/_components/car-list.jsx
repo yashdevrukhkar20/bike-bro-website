@@ -45,6 +45,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import useFetch from "@/hooks/use-fetch";
 import { getCars, deleteCar, updateCarStatus } from "@/actions/cars";
 import { formatCurrency } from "@/lib/helpers";
+import Image from "next/image";
 
 export const CarsList = () => {
   const router = useRouter();
@@ -214,10 +215,13 @@ export const CarsList = () => {
                       <TableCell>
                         <div className="w-10 h-10 rounded-md overflow-hidden">
                           {car.images && car.images.length > 0 ? (
-                            <img
+                            <Image
                               src={car.images[0]}
                               alt={`${car.make} ${car.model}`}
+                              height={40}
+                              width={40}
                               className="w-full h-full object-cover"
+                              priority
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-200 flex items-center justify-center">

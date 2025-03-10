@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { format, parseISO } from "date-fns";
 import { Calendar, Car, Clock, User, Loader2, ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -50,6 +51,7 @@ export function TestDriveCard({
   isPast = false,
   isAdmin = false,
   isCancelling = false,
+  renderStatusSelector = () => null,
 }) {
   const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
 
@@ -72,11 +74,14 @@ export function TestDriveCard({
           {/* Car Image - Left */}
           <div className="sm:w-1/4 relative h-40 sm:h-auto">
             {booking.car.images && booking.car.images.length > 0 ? (
-              <img // use Image here
-                src={booking.car.images[0]}
-                alt={`${booking.car.make} ${booking.car.model}`}
-                className="w-full h-full object-cover"
-              />
+              <div className="relative w-full h-full">
+                <Image
+                  src={booking.car.images[0]}
+                  alt={`${booking.car.make} ${booking.car.model}`}
+                  fill
+                  className="object-cover"
+                />
+              </div>
             ) : (
               <div className="w-full h-full bg-gray-200 flex items-center justify-center">
                 <Car className="h-12 w-12 text-gray-400" />
@@ -94,10 +99,11 @@ export function TestDriveCard({
             </div>
 
             <h3 className="text-lg font-bold mb-1">
-              {booking.car.year} {booking.car.make} {booking.car.model}
+              {booking.car.year} {booking.car.make} {booking.car.model}{" "}
             </h3>
+            {renderStatusSelector()}
 
-            <div className="space-y-2 mb-2">
+            <div className="space-y-2 my-2">
               <div className="flex items-center text-gray-600">
                 <Calendar className="h-4 w-4 mr-2" />
                 {format(new Date(booking.bookingDate), "EEEE, MMMM d, yyyy")}
@@ -131,7 +137,7 @@ export function TestDriveCard({
               <Button
                 variant="outline"
                 size="sm"
-                className="w-full mb-2 sm:mb-0"
+                className="w-full my-2 sm:mb-0"
                 asChild
               >
                 <Link
