@@ -192,47 +192,65 @@ export async function getDashboardData() {
       };
     }
 
-    // Cars statistics
-    const totalCars = await db.car.count();
-    const availableCars = await db.car.count({
-      where: { status: "AVAILABLE" },
-    });
-    const soldCars = await db.car.count({ where: { status: "SOLD" } });
-    const unavailableCars = await db.car.count({
-      where: { status: "UNAVAILABLE" },
-    });
-    const featuredCars = await db.car.count({ where: { featured: true } });
+    // Fetch all necessary data in a single parallel operation
+    const [cars, testDrives] = await Promise.all([
+      // Get all cars with minimal fields
+      db.car.findMany({
+        select: {
+          id: true,
+          status: true,
+          featured: true,
+        },
+      }),
 
-    // Test drive statistics
-    const totalTestDrives = await db.testDriveBooking.count();
-    const pendingTestDrives = await db.testDriveBooking.count({
-      where: { status: "PENDING" },
-    });
-    const confirmedTestDrives = await db.testDriveBooking.count({
-      where: { status: "CONFIRMED" },
-    });
-    const completedTestDrives = await db.testDriveBooking.count({
-      where: { status: "COMPLETED" },
-    });
-    const cancelledTestDrives = await db.testDriveBooking.count({
-      where: { status: "CANCELLED" },
-    });
-    const noShowTestDrives = await db.testDriveBooking.count({
-      where: { status: "NO_SHOW" },
-    });
+      // Get all test drives with minimal fields
+      db.testDriveBooking.findMany({
+        select: {
+          id: true,
+          status: true,
+          carId: true,
+        },
+      }),
+    ]);
 
-    // Calculate test drive conversion rate (completed test drives that led to sales)
-    const completedTestDriveCarIds = await db.testDriveBooking.findMany({
-      where: { status: "COMPLETED" },
-      select: { carId: true },
-    });
+    // Calculate car statistics
+    const totalCars = cars.length;
+    const availableCars = cars.filter(
+      (car) => car.status === "AVAILABLE"
+    ).length;
+    const soldCars = cars.filter((car) => car.status === "SOLD").length;
+    const unavailableCars = cars.filter(
+      (car) => car.status === "UNAVAILABLE"
+    ).length;
+    const featuredCars = cars.filter((car) => car.featured === true).length;
 
-    const soldCarsAfterTestDrive = await db.car.count({
-      where: {
-        id: { in: completedTestDriveCarIds.map((item) => item.carId) },
-        status: "SOLD",
-      },
-    });
+    // Calculate test drive statistics
+    const totalTestDrives = testDrives.length;
+    const pendingTestDrives = testDrives.filter(
+      (td) => td.status === "PENDING"
+    ).length;
+    const confirmedTestDrives = testDrives.filter(
+      (td) => td.status === "CONFIRMED"
+    ).length;
+    const completedTestDrives = testDrives.filter(
+      (td) => td.status === "COMPLETED"
+    ).length;
+    const cancelledTestDrives = testDrives.filter(
+      (td) => td.status === "CANCELLED"
+    ).length;
+    const noShowTestDrives = testDrives.filter(
+      (td) => td.status === "NO_SHOW"
+    ).length;
+
+    // Calculate test drive conversion rate
+    const completedTestDriveCarIds = testDrives
+      .filter((td) => td.status === "COMPLETED")
+      .map((td) => td.carId);
+
+    const soldCarsAfterTestDrive = cars.filter(
+      (car) =>
+        car.status === "SOLD" && completedTestDriveCarIds.includes(car.id)
+    ).length;
 
     const conversionRate =
       completedTestDrives > 0
