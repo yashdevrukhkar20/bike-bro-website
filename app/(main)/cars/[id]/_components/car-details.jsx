@@ -24,6 +24,14 @@ import useFetch from "@/hooks/use-fetch";
 import { formatCurrency } from "@/lib/helpers";
 import { format } from "date-fns";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import EmiCalculator from "./emi-calculator";
 
 export function CarDetails({ car, testDriveInfo }) {
   const router = useRouter();
@@ -203,25 +211,34 @@ export function CarDetails({ car, testDriveInfo }) {
             </div>
           </div>
 
-          {/* EMI Calculator Placeholder */}
-          <Card className="mb-6">
-            <CardContent className="p-4">
-              <div className="flex items-center gap-2 text-lg font-medium mb-2">
-                <Currency className="h-5 w-5 text-blue-600" />
-                <h3>EMI Calculator</h3>
-              </div>
-              <div className="text-sm text-gray-600">
-                Estimated Monthly Payment:{" "}
-                <span className="font-bold text-gray-900">
-                  {formatCurrency(car.price / 60)}
-                </span>{" "}
-                for 60 months
-              </div>
-              <div className="text-xs text-gray-500 mt-1">
-                *Based on $0 down payment and 4.5% interest rate
-              </div>
-            </CardContent>
-          </Card>
+          <Dialog>
+            <DialogTrigger className="w-full text-start">
+              <Card>
+                <CardContent>
+                  <div className="flex items-center gap-2 text-lg font-medium mb-2">
+                    <Currency className="h-5 w-5 text-blue-600" />
+                    <h3>EMI Calculator</h3>
+                  </div>
+                  <div className="text-sm text-gray-600">
+                    Estimated Monthly Payment:{" "}
+                    <span className="font-bold text-gray-900">
+                      {formatCurrency(car.price / 60)}
+                    </span>{" "}
+                    for 60 months
+                  </div>
+                  <div className="text-xs text-gray-500 mt-1">
+                    *Based on $0 down payment and 4.5% interest rate
+                  </div>
+                </CardContent>
+              </Card>
+            </DialogTrigger>
+            <DialogContent>
+              <DialogHeader>
+                <DialogTitle>Vehiql Car Loan Calculator</DialogTitle>
+                <EmiCalculator price={car.price} />
+              </DialogHeader>
+            </DialogContent>
+          </Dialog>
 
           {/* Request More Info */}
           <Card className="mb-6">
