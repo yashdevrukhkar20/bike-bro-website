@@ -168,7 +168,7 @@ export function TestDriveForm({ car, testDriveInfo }) {
 
     // Clear time slot selection when date changes
     setValue("timeSlot", "");
-  }, [selectedDate, dealership, existingBookings, setValue]);
+  }, [selectedDate]);
 
   // Create a function to determine which days should be disabled
   const isDayDisabled = (day) => {
