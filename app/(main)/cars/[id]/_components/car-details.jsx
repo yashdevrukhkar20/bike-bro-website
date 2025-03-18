@@ -213,7 +213,7 @@ export function CarDetails({ car, testDriveInfo }) {
 
           <Dialog>
             <DialogTrigger className="w-full text-start">
-              <Card>
+              <Card className="pt-5">
                 <CardContent>
                   <div className="flex items-center gap-2 text-lg font-medium mb-2">
                     <Currency className="h-5 w-5 text-blue-600" />
@@ -241,7 +241,7 @@ export function CarDetails({ car, testDriveInfo }) {
           </Dialog>
 
           {/* Request More Info */}
-          <Card className="mb-6">
+          <Card className="my-6">
             <CardContent className="p-4">
               <div className="flex items-center gap-2 text-lg font-medium mb-2">
                 <MessageSquare className="h-5 w-5 text-blue-600" />
