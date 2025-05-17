@@ -34,16 +34,13 @@ import useFetch from "@/hooks/use-fetch";
 import Image from "next/image";
 
 // Predefined options
-const fuelTypes = ["Petrol", "Diesel", "Electric", "Hybrid", "Plug-in Hybrid"];
-const transmissions = ["Automatic", "Manual", "Semi-Automatic"];
+const fuelTypes = ["Petrol", "Electric"];
+const transmissions = ["Automatic", "Manual"];
 const bodyTypes = [
-  "SUV",
-  "Sedan",
-  "Hatchback",
-  "Convertible",
-  "Coupe",
-  "Wagon",
-  "Pickup",
+  "Premium",
+  "Sports",
+  "Commuter",
+  "Scooter",
 ];
 const carStatuses = ["AVAILABLE", "UNAVAILABLE", "SOLD"];
 
@@ -59,6 +56,7 @@ const carFormSchema = z.object({
   mileage: z.string().min(1, "Mileage is required"),
   color: z.string().min(1, "Color is required"),
   fuelType: z.string().min(1, "Fuel type is required"),
+  // reg_no: z.string().min(1, "Mileage is required"),
   transmission: z.string().min(1, "Transmission is required"),
   bodyType: z.string().min(1, "Body type is required"),
   seats: z.string().optional(),
@@ -95,6 +93,7 @@ export const AddCarForm = () => {
       mileage: "",
       color: "",
       fuelType: "",
+      reg_no: "",
       transmission: "",
       bodyType: "",
       seats: "",
@@ -118,7 +117,7 @@ export const AddCarForm = () => {
     error: processImageError,
   } = useFetch(processCarImageWithAI);
 
-  // Handle successful car addition
+  // Handle successful bike addition
   useEffect(() => {
     if (addCarResult?.success) {
       toast.success("Car added successfully");
@@ -128,7 +127,7 @@ export const AddCarForm = () => {
 
   useEffect(() => {
     if (processImageError) {
-      toast.error(processImageError.message || "Failed to upload car");
+      toast.error(processImageError.message || "Failed to upload bike");
     }
   }, [processImageError]);
 
@@ -144,6 +143,7 @@ export const AddCarForm = () => {
       setValue("color", carDetails.color);
       setValue("bodyType", carDetails.bodyType);
       setValue("fuelType", carDetails.fuelType);
+      // setValue("reg_no", carDetails.reg_no);
       setValue("price", carDetails.price);
       setValue("mileage", carDetails.mileage);
       setValue("transmission", carDetails.transmission);
@@ -156,10 +156,9 @@ export const AddCarForm = () => {
       };
       reader.readAsDataURL(uploadedAiImage);
 
-      toast.success("Successfully extracted car details", {
-        description: `Detected ${carDetails.year} ${carDetails.make} ${
-          carDetails.model
-        } with ${Math.round(carDetails.confidence * 100)}% confidence`,
+      toast.success("Successfully extracted bike details", {
+        description: `Detected ${carDetails.year} ${carDetails.make} ${carDetails.model
+          } with ${Math.round(carDetails.confidence * 100)}% confidence`,
       });
 
       // Switch to manual tab for the user to review and fill in missing details
@@ -307,7 +306,7 @@ export const AddCarForm = () => {
             <CardHeader>
               <CardTitle>Car Details</CardTitle>
               <CardDescription>
-                Enter the details of the car you want to add.
+                Enter the details of the bike you want to add.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -363,7 +362,7 @@ export const AddCarForm = () => {
 
                   {/* Price */}
                   <div className="space-y-2">
-                    <Label htmlFor="price">Price ($)</Label>
+                    <Label htmlFor="price">Price (₹)</Label>
                     <Input
                       id="price"
                       {...register("price")}
@@ -392,6 +391,22 @@ export const AddCarForm = () => {
                       </p>
                     )}
                   </div>
+
+                  {/* Registration No */}
+                  {/* <div className="space-y-2">
+                    <Label htmlFor="reg_no">Registration No</Label>
+                    <Input
+                      id="reg_no"
+                      {...register("reg_no")}
+                      placeholder="MH03AA0001"
+                      className={errors.reg_no ? "border-red-500" : ""}
+                    />
+                    {errors.reg_no && (
+                      <p className="text-xs text-red-500">
+                        {errors.reg_no.message}
+                      </p>
+                    )}
+                  </div> */}
 
                   {/* Color */}
                   <div className="space-y-2">
@@ -490,7 +505,7 @@ export const AddCarForm = () => {
                     )}
                   </div>
 
-                  {/* Seats */}
+                  {/* Seats
                   <div className="space-y-2">
                     <Label htmlFor="seats">
                       Number of Seats{" "}
@@ -501,7 +516,7 @@ export const AddCarForm = () => {
                       {...register("seats")}
                       placeholder="e.g. 5"
                     />
-                  </div>
+                  </div> */}
 
                   {/* Status */}
                   <div className="space-y-2">
@@ -530,10 +545,9 @@ export const AddCarForm = () => {
                   <Textarea
                     id="description"
                     {...register("description")}
-                    placeholder="Enter detailed description of the car..."
-                    className={`min-h-32 ${
-                      errors.description ? "border-red-500" : ""
-                    }`}
+                    placeholder="Enter detailed description of the bike..."
+                    className={`min-h-32 ${errors.description ? "border-red-500" : ""
+                      }`}
                   />
                   {errors.description && (
                     <p className="text-xs text-red-500">
@@ -552,7 +566,7 @@ export const AddCarForm = () => {
                     }}
                   />
                   <div className="space-y-1 leading-none">
-                    <Label htmlFor="featured">Feature this car</Label>
+                    <Label htmlFor="featured">Feature this bike</Label>
                     <p className="text-sm text-gray-500">
                       Featured cars appear on the homepage
                     </p>
@@ -571,9 +585,8 @@ export const AddCarForm = () => {
                   <div className="mt-2">
                     <div
                       {...getMultiImageRootProps()}
-                      className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50 transition ${
-                        imageError ? "border-red-500" : "border-gray-300"
-                      }`}
+                      className={`border-2 border-dashed rounded-lg p-6 text-center cursor-pointer hover:bg-gray-50 transition ${imageError ? "border-red-500" : "border-gray-300"
+                        }`}
                     >
                       <input {...getMultiImageInputProps()} />
                       <div className="flex flex-col items-center justify-center">
@@ -643,7 +656,7 @@ export const AddCarForm = () => {
                       Adding Car...
                     </>
                   ) : (
-                    "Add Car"
+                    "Add Bike"
                   )}
                 </Button>
               </form>
@@ -654,9 +667,9 @@ export const AddCarForm = () => {
         <TabsContent value="ai" className="mt-6">
           <Card>
             <CardHeader>
-              <CardTitle>AI-Powered Car Details Extraction</CardTitle>
+              <CardTitle>AI-Powered Bike Details Extraction</CardTitle>
               <CardDescription>
-                Upload an image of a car and let Gemini AI extract its details.
+                Upload an image of a bike and let Gemini AI extract its details.
               </CardDescription>
             </CardHeader>
             <CardContent>
@@ -708,7 +721,7 @@ export const AddCarForm = () => {
                       <div className="flex flex-col items-center justify-center">
                         <Camera className="h-12 w-12 text-gray-400 mb-3" />
                         <span className="text-sm text-gray-600">
-                          Drag & drop or click to upload a car image
+                          Drag & drop or click to upload a bike image
                         </span>
                         <span className="text-xs text-gray-500 mt-1">
                           (JPG, PNG, WebP, max 5MB)
@@ -724,7 +737,7 @@ export const AddCarForm = () => {
                     <div>
                       <p className="font-medium">Analyzing image...</p>
                       <p className="text-sm">
-                        Gemini AI is extracting car details
+                        Gemini AI is extracting bike details
                       </p>
                     </div>
                   </div>
@@ -733,11 +746,11 @@ export const AddCarForm = () => {
                 <div className="bg-gray-50 p-4 rounded-md">
                   <h3 className="font-medium mb-2">How it works</h3>
                   <ol className="space-y-2 text-sm text-gray-600 list-decimal pl-4">
-                    <li>Upload a clear image of the car</li>
+                    <li>Upload a clear image of the bike</li>
                     <li>Click "Extract Details" to analyze with Gemini AI</li>
                     <li>Review the extracted information</li>
                     <li>Fill in any missing details manually</li>
-                    <li>Add the car to your inventory</li>
+                    <li>Add the bike to your inventory</li>
                   </ol>
                 </div>
 

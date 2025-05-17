@@ -14,7 +14,7 @@ const routes = [
     href: "/admin",
   },
   {
-    label: "Cars",
+    label: "Bikes",
     icon: Car,
     href: "/admin/cars",
   },

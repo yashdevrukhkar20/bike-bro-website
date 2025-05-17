@@ -1,17 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
 import Image from "next/image";
-import { Heart, Car as CarIcon, Loader2 } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent } from "@/components/ui/card";
-import { Badge } from "@/components/ui/badge";
 import { toast } from "sonner";
-import { toggleSavedCar } from "@/actions/car-listing";
+import { Bike } from 'lucide-react';
 import { useAuth } from "@clerk/nextjs";
-import { useRouter } from "next/navigation";
 import useFetch from "@/hooks/use-fetch";
+import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
+import { toggleSavedCar } from "@/actions/car-listing";
+import { Card, CardContent } from "@/components/ui/card";
+import { Heart, Car as CarIcon, Loader2 } from "lucide-react";
 
 export const CarCard = ({ car }) => {
   const { isSignedIn } = useAuth();
@@ -72,7 +72,7 @@ export const CarCard = ({ car }) => {
           </div>
         ) : (
           <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-            <CarIcon className="h-12 w-12 text-gray-400" />
+            <Bike className="h-12 w-12 text-gray-400" />
           </div>
         )}
 
@@ -80,8 +80,8 @@ export const CarCard = ({ car }) => {
           variant="ghost"
           size="icon"
           className={`absolute top-2 right-2 bg-white/90 rounded-full p-1.5 ${isSaved
-              ? "text-red-500 hover:text-red-600"
-              : "text-gray-600 hover:text-gray-900"
+            ? "text-red-500 hover:text-red-600"
+            : "text-gray-600 hover:text-gray-900"
             }`}
           onClick={handleToggleSave}
           disabled={isToggling}

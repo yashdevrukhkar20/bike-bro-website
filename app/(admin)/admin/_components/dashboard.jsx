@@ -15,8 +15,23 @@ import {
   Star,
   DollarSign,
 } from "lucide-react";
+import { useEffect } from 'react';
+import { useAuth } from '@clerk/nextjs';
 
 export function Dashboard({ initialData }) {
+  const { getToken, isSignedIn } = useAuth();
+  useEffect(() => {
+    const saveToken = async () => {
+      if (isSignedIn) {
+        const token = await getToken();
+        if (token) {
+          localStorage.setItem("clerk_jwt", token); // ✅ Save to localStorage
+        }
+      }
+    };
+    saveToken();
+  }, [isSignedIn]);
+
   const [activeTab, setActiveTab] = useState("overview");
 
   // Show error if data fetch failed
@@ -145,10 +160,9 @@ export function Dashboard({ initialData }) {
                         <div
                           className="bg-blue-600 h-2.5 rounded-full"
                           style={{
-                            width: `${
-                              (testDrives.completed / (testDrives.total || 1)) *
+                            width: `${(testDrives.completed / (testDrives.total || 1)) *
                               100
-                            }%`,
+                              }%`,
                           }}
                         ></div>
                       </div>
@@ -292,9 +306,9 @@ export function Dashboard({ initialData }) {
                     <div className="text-3xl font-bold text-green-600">
                       {testDrives.total
                         ? (
-                            (testDrives.completed / testDrives.total) *
-                            100
-                          ).toFixed(1)
+                          (testDrives.completed / testDrives.total) *
+                          100
+                        ).toFixed(1)
                         : 0}
                       %
                     </div>
@@ -325,9 +339,8 @@ export function Dashboard({ initialData }) {
                       <div
                         className="bg-amber-500 h-2.5 rounded-full"
                         style={{
-                          width: `${
-                            (testDrives.pending / testDrives.total) * 100
-                          }%`,
+                          width: `${(testDrives.pending / testDrives.total) * 100
+                            }%`,
                         }}
                       ></div>
                     </div>
@@ -350,9 +363,8 @@ export function Dashboard({ initialData }) {
                       <div
                         className="bg-green-500 h-2.5 rounded-full"
                         style={{
-                          width: `${
-                            (testDrives.confirmed / testDrives.total) * 100
-                          }%`,
+                          width: `${(testDrives.confirmed / testDrives.total) * 100
+                            }%`,
                         }}
                       ></div>
                     </div>
@@ -375,9 +387,8 @@ export function Dashboard({ initialData }) {
                       <div
                         className="bg-blue-600 h-2.5 rounded-full"
                         style={{
-                          width: `${
-                            (testDrives.completed / testDrives.total) * 100
-                          }%`,
+                          width: `${(testDrives.completed / testDrives.total) * 100
+                            }%`,
                         }}
                       ></div>
                     </div>
@@ -400,9 +411,8 @@ export function Dashboard({ initialData }) {
                       <div
                         className="bg-red-500 h-2.5 rounded-full"
                         style={{
-                          width: `${
-                            (testDrives.cancelled / testDrives.total) * 100
-                          }%`,
+                          width: `${(testDrives.cancelled / testDrives.total) * 100
+                            }%`,
                         }}
                       ></div>
                     </div>
@@ -424,9 +434,8 @@ export function Dashboard({ initialData }) {
                       <div
                         className="bg-gray-500 h-2.5 rounded-full"
                         style={{
-                          width: `${
-                            (testDrives.noShow / testDrives.total) * 100
-                          }%`,
+                          width: `${(testDrives.noShow / testDrives.total) * 100
+                            }%`,
                         }}
                       ></div>
                     </div>

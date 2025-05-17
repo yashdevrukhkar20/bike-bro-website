@@ -135,18 +135,16 @@ export function CarDetails({ car, testDriveInfo }) {
               {car.images.map((image, index) => (
                 <div
                   key={index}
-                  className={`relative cursor-pointer rounded-md h-20 w-24 flex-shrink-0 transition ${
-                    index === currentImageIndex
-                      ? "border-2 border-blue-600"
-                      : "opacity-70 hover:opacity-100"
-                  }`}
+                  className={`relative cursor-pointer rounded-md h-20 w-24 flex-shrink-0 transition ${index === currentImageIndex
+                    ? "border-2 border-blue-600"
+                    : "opacity-70 hover:opacity-100"
+                    }`}
                   onClick={() => setCurrentImageIndex(index)}
                 >
                   <Image
                     src={image}
-                    alt={`${car.year} ${car.make} ${car.model} - view ${
-                      index + 1
-                    }`}
+                    alt={`${car.year} ${car.make} ${car.model} - view ${index + 1
+                      }`}
                     fill
                     className="object-cover"
                   />
@@ -159,9 +157,8 @@ export function CarDetails({ car, testDriveInfo }) {
           <div className="flex mt-4 gap-4">
             <Button
               variant="outline"
-              className={`flex items-center gap-2 flex-1 ${
-                isWishlisted ? "text-red-500" : ""
-              }`}
+              className={`flex items-center gap-2 flex-1 ${isWishlisted ? "text-red-500" : ""
+                }`}
               onClick={handleSaveCar}
               disabled={savingCar}
             >
@@ -278,9 +275,9 @@ export function CarDetails({ car, testDriveInfo }) {
               <Calendar className="mr-2 h-5 w-5" />
               {testDriveInfo.userTestDrive
                 ? `Booked for ${format(
-                    new Date(testDriveInfo.userTestDrive.bookingDate),
-                    "EEEE, MMMM d, yyyy"
-                  )}`
+                  new Date(testDriveInfo.userTestDrive.bookingDate),
+                  "EEEE, MMMM d, yyyy"
+                )}`
                 : "Book Test Drive"}
             </Button>
           )}
@@ -331,6 +328,11 @@ export function CarDetails({ car, testDriveInfo }) {
         <h2 className="text-2xl font-bold mb-6">Specifications</h2>
         <div className="bg-gray-50 rounded-lg p-6">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8">
+            {/* <div className="flex justify-between py-2 border-b">
+              <span className="text-gray-600">Registration No</span>
+              {car }
+              <span className="font-medium">{car.reg_no}</span>
+            </div> */}
             <div className="flex justify-between py-2 border-b">
               <span className="text-gray-600">Make</span>
               <span className="font-medium">{car.make}</span>
@@ -403,57 +405,57 @@ export function CarDetails({ car, testDriveInfo }) {
               <div className="space-y-2">
                 {testDriveInfo.dealership?.workingHours
                   ? testDriveInfo.dealership.workingHours
-                      .sort((a, b) => {
-                        const days = [
-                          "MONDAY",
-                          "TUESDAY",
-                          "WEDNESDAY",
-                          "THURSDAY",
-                          "FRIDAY",
-                          "SATURDAY",
-                          "SUNDAY",
-                        ];
-                        return (
-                          days.indexOf(a.dayOfWeek) - days.indexOf(b.dayOfWeek)
-                        );
-                      })
-                      .map((day) => (
-                        <div
-                          key={day.dayOfWeek}
-                          className="flex justify-between text-sm"
-                        >
-                          <span className="text-gray-600">
-                            {day.dayOfWeek.charAt(0) +
-                              day.dayOfWeek.slice(1).toLowerCase()}
-                          </span>
-                          <span>
-                            {day.isOpen
-                              ? `${day.openTime} - ${day.closeTime}`
-                              : "Closed"}
-                          </span>
-                        </div>
-                      ))
-                  : // Default hours if none provided
-                    [
-                      "Monday",
-                      "Tuesday",
-                      "Wednesday",
-                      "Thursday",
-                      "Friday",
-                      "Saturday",
-                      "Sunday",
-                    ].map((day, index) => (
-                      <div key={day} className="flex justify-between text-sm">
-                        <span className="text-gray-600">{day}</span>
+                    .sort((a, b) => {
+                      const days = [
+                        "MONDAY",
+                        "TUESDAY",
+                        "WEDNESDAY",
+                        "THURSDAY",
+                        "FRIDAY",
+                        "SATURDAY",
+                        "SUNDAY",
+                      ];
+                      return (
+                        days.indexOf(a.dayOfWeek) - days.indexOf(b.dayOfWeek)
+                      );
+                    })
+                    .map((day) => (
+                      <div
+                        key={day.dayOfWeek}
+                        className="flex justify-between text-sm"
+                      >
+                        <span className="text-gray-600">
+                          {day.dayOfWeek.charAt(0) +
+                            day.dayOfWeek.slice(1).toLowerCase()}
+                        </span>
                         <span>
-                          {index < 5
-                            ? "9:00 - 18:00"
-                            : index === 5
-                            ? "10:00 - 16:00"
+                          {day.isOpen
+                            ? `${day.openTime} - ${day.closeTime}`
                             : "Closed"}
                         </span>
                       </div>
-                    ))}
+                    ))
+                  : // Default hours if none provided
+                  [
+                    "Monday",
+                    "Tuesday",
+                    "Wednesday",
+                    "Thursday",
+                    "Friday",
+                    "Saturday",
+                    "Sunday",
+                  ].map((day, index) => (
+                    <div key={day} className="flex justify-between text-sm">
+                      <span className="text-gray-600">{day}</span>
+                      <span>
+                        {index < 5
+                          ? "9:00 - 18:00"
+                          : index === 5
+                            ? "10:00 - 16:00"
+                            : "Closed"}
+                      </span>
+                    </div>
+                  ))}
               </div>
             </div>
           </div>

@@ -35,6 +35,7 @@ CREATE TABLE "Car" (
     "mileage" INTEGER NOT NULL,
     "color" TEXT NOT NULL,
     "fuelType" TEXT NOT NULL,
+    "reg_no" TEXT NOT NULL,
     "transmission" TEXT NOT NULL,
     "bodyType" TEXT NOT NULL,
     "seats" INTEGER,

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { Bike } from 'lucide-react';
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import {
@@ -85,15 +86,15 @@ export const CarsList = () => {
   // Handle errors
   useEffect(() => {
     if (carsError) {
-      toast.error("Failed to load cars");
+      toast.error("Failed to load bikes");
     }
 
     if (deleteError) {
-      toast.error("Failed to delete car");
+      toast.error("Failed to delete bike");
     }
 
     if (updateError) {
-      toast.error("Failed to update car");
+      toast.error("Failed to update bike");
     }
   }, [carsError, deleteError, updateError]);
 
@@ -170,7 +171,7 @@ export const CarsList = () => {
           className="flex items-center"
         >
           <Plus className="h-4 w-4" />
-          Add Car
+          Add Bike
         </Button>
 
         {/* Simple Search Form */}
@@ -179,7 +180,7 @@ export const CarsList = () => {
             <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
             <Input
               type="search"
-              placeholder="Search cars..."
+              placeholder="Search bikes..."
               className="pl-9 w-full sm:w-60"
               value={search}
               onChange={(e) => setSearch(e.target.value)}
@@ -225,7 +226,7 @@ export const CarsList = () => {
                             />
                           ) : (
                             <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                              <CarIcon className="h-6 w-6 text-gray-400" />
+                              <Bike className="h-6 w-6 text-gray-400" />
                             </div>
                           )}
                         </div>
@@ -319,17 +320,17 @@ export const CarsList = () => {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center py-12 px-4 text-center">
-              <CarIcon className="h-12 w-12 text-gray-300 mb-4" />
+              <Bike className="h-12 w-12 text-gray-300 mb-4" />
               <h3 className="text-lg font-medium text-gray-900 mb-1">
-                No cars found
+                No bikes found
               </h3>
               <p className="text-gray-500 mb-4">
                 {search
                   ? "No cars match your search criteria"
-                  : "Your inventory is empty. Add cars to get started."}
+                  : "Your inventory is empty. Add bike to get started."}
               </p>
               <Button onClick={() => router.push("/admin/cars/create")}>
-                Add Your First Car
+                Add Your First Bike
               </Button>
             </div>
           )}

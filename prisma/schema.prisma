@@ -47,11 +47,13 @@ model Car {
   testDriveBookings TestDriveBooking[]
   createdAt         DateTime           @default(now())
   updatedAt         DateTime           @updatedAt
+  reg_no            String
 
   @@index([make, model])
   @@index([bodyType])
   @@index([price])
   @@index([year])
+  @@index([reg_no])
   @@index([status])
   @@index([fuelType])
   @@index([featured])

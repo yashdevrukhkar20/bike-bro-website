@@ -48,10 +48,11 @@ export async function processCarImageWithAI(file) {
       4. Color
       5. Body type (SUV, Sedan, Hatchback, etc.)
       6. Mileage
-      7. Fuel type (your best guess)
-      8. Transmission type (your best guess)
-      9. Price (your best guess)
-      9. Short Description as to be added to a car listing
+      7. Registration No
+      8. Fuel type (your best guess)
+      9. Transmission type (your best guess)
+      10. Price (your best guess)
+      11. Short Description as to be added to a car listing
 
       Format your response as a clean JSON object with these fields:
       {
@@ -183,7 +184,7 @@ export async function addCar({ carData, images }) {
       }
 
       // Get the public URL for the uploaded file
-      const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/public/car-images/${filePath}`; // disable cache in config
+      const publicUrl = `${process.env.NEXT_PUBLIC_SUPABASE_URL}/storage/v1/object/sign/car-images/${filePath}`; // disable cache in config
 
       imageUrls.push(publicUrl);
     }
@@ -204,6 +205,7 @@ export async function addCar({ carData, images }) {
         color: carData.color,
         fuelType: carData.fuelType,
         transmission: carData.transmission,
+        // reg_no: carData.reg_no,
         bodyType: carData.bodyType,
         seats: carData.seats,
         description: carData.description,
