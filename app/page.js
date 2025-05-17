@@ -24,10 +24,10 @@ export default async function Home() {
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-5xl md:text-8xl mb-4 gradient-title">
-              Find your Dream Bike with Bike Bro AI
+              Find your Dream Bike with AI
             </h1>
             <p className="text-xl text-gray-500 mb-8 max-w-2xl mx-auto">
-              Advanced AI Car Search and test drive from thousands of vehicles.
+              Advanced AI Bike Search and test drive from thousands of vehicles.
             </p>
           </div>
 
@@ -40,7 +40,7 @@ export default async function Home() {
       <section className="py-12">
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold">Featured Cars</h2>
+            <h2 className="text-2xl font-bold">Featured Bikes</h2>
             <Button variant="ghost" className="flex items-center" asChild>
               <Link href="/cars">
                 View All <ChevronRight className="ml-1 h-4 w-4" />
