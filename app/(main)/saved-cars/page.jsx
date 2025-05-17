@@ -5,7 +5,7 @@ import { redirect } from "next/navigation";
 
 export const metadata = {
   title: "Saved Cars | Vehiql",
-  description: "View your saved cars and favorites",
+  description: "View your saved bikes and favorites",
 };
 
 export default async function SavedCarsPage() {

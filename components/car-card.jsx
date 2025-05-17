@@ -79,11 +79,10 @@ export const CarCard = ({ car }) => {
         <Button
           variant="ghost"
           size="icon"
-          className={`absolute top-2 right-2 bg-white/90 rounded-full p-1.5 ${
-            isSaved
+          className={`absolute top-2 right-2 bg-white/90 rounded-full p-1.5 ${isSaved
               ? "text-red-500 hover:text-red-600"
               : "text-gray-600 hover:text-gray-900"
-          }`}
+            }`}
           onClick={handleToggleSave}
           disabled={isToggling}
         >
@@ -132,7 +131,7 @@ export const CarCard = ({ car }) => {
               router.push(`/cars/${car.id}`);
             }}
           >
-            View Car
+            View Bike
           </Button>
         </div>
       </CardContent>
