@@ -61,8 +61,8 @@ export const CarFilterControls = ({
           />
         </div>
         <div className="flex items-center justify-between">
-          <div className="font-medium text-sm">$ {priceRange[0]}</div>
-          <div className="font-medium text-sm">$ {priceRange[1]}</div>
+          <div className="font-medium text-sm">₹ {priceRange[0]}</div>
+          <div className="font-medium text-sm">₹ {priceRange[1]}</div>
         </div>
       </div>
 
@@ -88,11 +88,10 @@ export const CarFilterControls = ({
                 variant={
                   section.currentValue === option.value ? "default" : "outline"
                 }
-                className={`cursor-pointer px-3 py-1 ${
-                  section.currentValue === option.value
+                className={`cursor-pointer px-3 py-1 ${section.currentValue === option.value
                     ? "bg-blue-100 hover:bg-blue-200 text-blue-900 border-blue-200"
                     : "bg-white hover:bg-gray-100 text-gray-700"
-                }`}
+                  }`}
                 onClick={() => {
                   section.onChange(
                     section.currentValue === option.value ? "" : option.value
