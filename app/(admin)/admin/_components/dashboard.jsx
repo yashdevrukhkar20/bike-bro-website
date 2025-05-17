@@ -15,23 +15,10 @@ import {
   Star,
   DollarSign,
 } from "lucide-react";
-import { useEffect } from 'react';
 import { useAuth } from '@clerk/nextjs';
 
 export function Dashboard({ initialData }) {
-  const { getToken, isSignedIn } = useAuth();
-  useEffect(() => {
-    const saveToken = async () => {
-      if (isSignedIn) {
-        const token = await getToken();
-        if (token) {
-          localStorage.setItem("clerk_jwt", token); // ✅ Save to localStorage
-        }
-      }
-    };
-    saveToken();
-  }, [isSignedIn]);
-
+  const { isSignedIn } = useAuth();
   const [activeTab, setActiveTab] = useState("overview");
 
   // Show error if data fetch failed
